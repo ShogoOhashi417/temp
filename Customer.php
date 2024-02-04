@@ -6,7 +6,7 @@ require_once "MailAddress.php";
 class Customer {
     private readonly MailAddress $mailAddress; //識別子
 
-    private readonly CustomerName $customerName;
+    private CustomerName $customerName;
 
     public function __construct(MailAddress $mailAddress, CustomerName $customerName)
     {
@@ -22,5 +22,10 @@ class Customer {
     public function getCustomerName()
     {
         return $this->customerName;
+    }
+
+    public function changeName(string $name)
+    {
+        $this->customerName->setName($name);
     }
 }

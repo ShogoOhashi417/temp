@@ -1,7 +1,7 @@
 <?php
 
 class CustomerName {
-    private readonly string $name;
+    private string $name;
 
     public function __construct(string $name)
     {
@@ -14,5 +14,10 @@ class CustomerName {
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }

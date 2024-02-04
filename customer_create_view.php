@@ -19,35 +19,13 @@ $mailAddress = "sohashi@kairosmarketing.net";
 $name = "大橋省吾";
 
 try {
-    $customer = new Customer(
-        new MailAddress("sohashi@kairosmarketing.net"),
-        new CustomerName("大橋省吾")
-    );
+    $customer = $createCustomerUseCase->handle($mailAddress, $name);
 } catch (Exception $e) {
     echo $e->getMessage();
     exit;
 }
 
-// CustomerModelは特定のデータストアに依存している
-// $customerModel = new CustomerModel(new DBServiceDB());
+$customer->changeName("オーハシショーゴ");
 
-// DBの切り替えが安全でシンプル
-$customerRepository = new CustomerRepository();
-// $customerRepository = new CustomerNoSQLRepository();
-
-// $customerDuplicatChecker = new CustomerDuplicateChecker($customerModel);
-$customerDuplicatChecker = new CustomerDuplicateChecker($customerRepository);
-
-if ($customerDuplicatChecker->exists($customer)) {
-    echo $customer->getMailAddress()->getMailAddress() . "はすでに登録されています";
-    exit;
-}
-
-$customerRepository->save($customer);
-
-// $customerModel->insert(
-//     [
-//         'mail_address' => $customer->getMailAddress()->getMailAddress(),
-//         'name' => $customer->getCustomerName()->getName()
-//     ]
-// );
+echo PHP_EOL;
+echo "保存に成功しました。顧客名：" . $customer->getCustomerName()->getName();
