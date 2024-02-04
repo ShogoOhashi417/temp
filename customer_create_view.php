@@ -6,6 +6,17 @@ require_once "CustomerName.php";
 require_once "MailAddress.php";
 require_once "CustomerDuplicateChecker.php";
 require_once "CustomerRepository.php";
+require_once "CreateCustomerUseCase.php";
+
+$customerRepository = new CustomerRepository();
+
+$createCustomerUseCase = new CreateCustomerUseCase(
+    $customerRepository,
+    new CustomerDuplicateChecker($customerRepository)
+);
+
+$mailAddress = "sohashi@kairosmarketing.net";
+$name = "大橋省吾";
 
 try {
     $customer = new Customer(
