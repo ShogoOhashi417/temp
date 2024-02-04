@@ -25,7 +25,6 @@ try {
     exit;
 }
 
-$customer->changeName("オーハシショーゴ");
-
+//　データを取り出すことだけに制限できる
 echo PHP_EOL;
-echo "保存に成功しました。顧客名：" . $customer->getCustomerName()->getName();
+echo "保存に成功しました。顧客名：" . $customer->getName();

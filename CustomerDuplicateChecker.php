@@ -16,7 +16,7 @@ class CustomerDuplicateChecker {
     {
         $result = $this->customerRepository->find($customer->getMailAddress()->getMailAddress());
 
-        return true;
+        return false;
         // return (bool)$result;
     }
 }

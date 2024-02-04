@@ -1,5 +1,7 @@
 <?php
 
+require_once "CreateCustomerDTO.php";
+
 class CreateCustomerUseCase {
     private readonly CustomerRepositoyInterface $customerRepository;
     private readonly CustomerDuplicateChecker $customerDuplicateChecker;
@@ -29,6 +31,6 @@ class CreateCustomerUseCase {
 
         $this->customerRepository->save($customer);
 
-        return $customer;
+        return new CreateCustomerDTO($mailAddress, $name);
     }
 }
