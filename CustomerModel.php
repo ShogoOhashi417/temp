@@ -17,6 +17,11 @@ class CustomerModel {
     {
         echo $dataList['name'] . "に更新しました";
     }
+
+    public function select(array $sql)
+    {
+
+    }
 }
 
 class DBServiceDB {

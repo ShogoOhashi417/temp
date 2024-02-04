@@ -17,6 +17,11 @@ try {
 
 $customerModel = new CustomerModel(new DBServiceDB());
 
+if ($customer->exists($customer)) {
+    echo $customer->getMailAddress()->getMailAddress() . "はすでに登録されています";
+    exit;
+}
+
 $customerModel->insert(
     [
         'mail_address' => $customer->getMailAddress()->getMailAddress(),

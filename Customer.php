@@ -23,4 +23,19 @@ class Customer {
     {
         return $this->customerName;
     }
+
+    // CustomerNameだけについてテストしたくても、DBの接続についても考えないといけない
+    public function exists(Customer $customer)
+    {
+        $customerModel = new CustomerModel(new DBServiceDB());
+        $result = $customerModel->select(
+            ['name'],
+            // [
+            //     new WhereParam('mail_address', '=', $customer->getMailAddress()->getMailAddress())
+            // ]
+        );
+
+        return true;
+        // return (bool)$result[0]['name'];
+    }
 }
