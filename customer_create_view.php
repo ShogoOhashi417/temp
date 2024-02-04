@@ -5,6 +5,7 @@ require_once "Customer.php";
 require_once "CustomerName.php";
 require_once "MailAddress.php";
 require_once "CustomerDuplicateChecker.php";
+require_once "CustomerRepository.php";
 
 try {
     $customer = new Customer(
@@ -17,18 +18,25 @@ try {
 }
 
 // CustomerModelは特定のデータストアに依存している
-$customerModel = new CustomerModel(new DBServiceDB());
+// $customerModel = new CustomerModel(new DBServiceDB());
 
-$customerDuplicatChecker = new CustomerDuplicateChecker($customerModel);
+// DBの切り替えが安全でシンプル
+$customerRepository = new CustomerRepository();
+// $customerRepository = new CustomerNoSQLRepository();
+
+// $customerDuplicatChecker = new CustomerDuplicateChecker($customerModel);
+$customerDuplicatChecker = new CustomerDuplicateChecker($customerRepository);
 
 if ($customerDuplicatChecker->exists($customer)) {
     echo $customer->getMailAddress()->getMailAddress() . "はすでに登録されています";
     exit;
 }
 
-$customerModel->insert(
-    [
-        'mail_address' => $customer->getMailAddress()->getMailAddress(),
-        'name' => $customer->getCustomerName()->getName()
-    ]
-);
+$customerRepository->save($customer);
+
+// $customerModel->insert(
+//     [
+//         'mail_address' => $customer->getMailAddress()->getMailAddress(),
+//         'name' => $customer->getCustomerName()->getName()
+//     ]
+// );

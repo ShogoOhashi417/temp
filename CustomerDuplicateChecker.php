@@ -2,28 +2,21 @@
 
 require_once "CustomerModel.php";
 require_once "Customer.php";
+require_once "CustomerRepositoyInterface.php";
 
 class CustomerDuplicateChecker {
-    private readonly CustomerModel $customerModel;
+    private readonly CustomerRepositoyInterface $customerRepository;
 
-    // CustomerModelは特定のデータストアに依存している
-    // ドメインサービスなのに、永続化の責務も持ってしまっている
-    public function __construct(CustomerModel $customerModel)
+    public function __construct(CustomerRepositoyInterface $customerRepository)
     {
-        $this->customerModel = $customerModel;
+        $this->customerRepository = $customerRepository;
     }
 
     public function exists(Customer $customer): bool
     {
-        $result = $this->customerModel->select(
-            ['name'],
-            // [
-            //     new WhereParam('mail_address', '=', $customer->getMailAddress()->getMailAddress())
-            // ]
-        );
+        $result = $this->customerRepository->find($customer->getMailAddress()->getMailAddress());
 
         return true;
-
-        // return (bool)$result[0]['name'];
+        // return (bool)$result;
     }
 }
