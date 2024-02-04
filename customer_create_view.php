@@ -4,6 +4,7 @@ require_once "CustomerModel.php";
 require_once "Customer.php";
 require_once "CustomerName.php";
 require_once "MailAddress.php";
+require_once "CustomerDuplicateChecker.php";
 
 try {
     $customer = new Customer(
@@ -17,7 +18,9 @@ try {
 
 $customerModel = new CustomerModel(new DBServiceDB());
 
-if ($customer->exists($customer)) {
+$customerDuplicatChecker = new CustomerDuplicateChecker($customerModel);
+
+if ($customerDuplicatChecker->exists($customer)) {
     echo $customer->getMailAddress()->getMailAddress() . "はすでに登録されています";
     exit;
 }
