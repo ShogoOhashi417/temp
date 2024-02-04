@@ -13,6 +13,11 @@ class CustomerDuplicateChecker {
 
     public function exists(Customer $customer): bool
     {
+        // 究極、ドメインサービスにルールやロジックは全て書くことができる
+        if (mb_strlen($customer->getCustomerName()->getName()) < 3) {
+            throw new Exception("名前は3文字以上で入力してください");
+        }
+
         $result = $this->customerModel->select(
             ['name'],
             // [
