@@ -6,6 +6,8 @@ require_once "Customer.php";
 class CustomerDuplicateChecker {
     private readonly CustomerModel $customerModel;
 
+    // CustomerModelは特定のデータストアに依存している
+    // ドメインサービスなのに、永続化の責務も持ってしまっている
     public function __construct(CustomerModel $customerModel)
     {
         $this->customerModel = $customerModel;

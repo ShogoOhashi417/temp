@@ -16,6 +16,7 @@ try {
     exit;
 }
 
+// CustomerModelは特定のデータストアに依存している
 $customerModel = new CustomerModel(new DBServiceDB());
 
 $customerDuplicatChecker = new CustomerDuplicateChecker($customerModel);
