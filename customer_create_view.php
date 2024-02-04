@@ -1,10 +1,15 @@
 <?php
 
 require_once "CustomerModel.php";
+require_once "Customer.php";
 require_once "CustomerName.php";
+require_once "MailAddress.php";
 
 try {
-    $customerName = new CustomerName("大橋省吾");
+    $customer = new Customer(
+        new MailAddress("sohashi@kairosmarketing.net"),
+        new CustomerName("大橋省吾")
+    );
 } catch (Exception $e) {
     echo $e->getMessage();
     exit;
@@ -14,6 +19,7 @@ $customerModel = new CustomerModel(new DBServiceDB());
 
 $customerModel->insert(
     [
-        'name' => $customerName->getName()
+        'mail_address' => $customer->getMailAddress()->getMailAddress(),
+        'name' => $customer->getCustomerName()->getName()
     ]
 );
